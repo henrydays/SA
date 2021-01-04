@@ -26,12 +26,15 @@ def search(tag, num_pages):
             f"https://www.publico.pt/api/list/{tag}?page={page_number}"
         ).text
     ) != "[]" and page_number < num_pages:
+        try:
+            data = json.loads(response)
 
-        data = json.loads(response)
-
-        for hit in data:
-            collected_news.append(Hit(hit["titulo"],hit["data"],hit["descricao"]))
-     
+            for hit in data:
+                collected_news.append(Hit(hit["titulo"],hit["data"],hit["descricao"]))
+        except:
+            pass
+        
+        print("page number: "+ str(page_number))
         page_number += 1
 
     return collected_news

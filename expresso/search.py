@@ -33,8 +33,6 @@ def search(start_date, end_date, s):
         response = session.get("https://expresso.pt/api/molecule/latest/economia?offset="+single_date.strftime("%Y-%m-%d"))
         parsed_html = BeautifulSoup(response.content)
 
-        descricoes = parsed_html.body.findAll('h2', attrs={'class': 'lead'})
-
         desc = []
         titl = []
         date = []
@@ -50,7 +48,7 @@ def search(start_date, end_date, s):
 
         for i in range(len(desc)):
             collected_news.append(Hit(date[i], titl[i], desc[i]))
-
+        print("current date: "+ str(single_date))
         sleep(s)
 
     return collected_news
